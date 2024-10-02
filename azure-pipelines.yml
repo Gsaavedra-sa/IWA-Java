@@ -50,10 +50,13 @@ stages:
           fcli sc-sast session login
           
           scancentral package -bt mvn -o package.zip
-          fcli sc-sast scan start --publish-to=$SSC_APP_VERSION_ID --sensor-version=$SC_SAST_SENSOR_VERSION --package-file=package.zip --store=Id
+          fcli sc-sast scan start --publish-to=$SSC_APP_VERSION_ID --sensor-version=$SC_SAST_SENSOR_VERSION --package-file=package.zip --store=Id --log-file=scan.log
 
           fcli sc-sast scan wait-for ::Id:: --interval=30s
           fcli ssc issue count --appversion=$SSC_APP_VERSION_ID
+
+          echo analisando log 
+          cat scan.log
 
           echo Terminating connection with Fortify Platform
           fcli sc-sast session logout
