@@ -52,6 +52,7 @@ stages:
           scancentral package -bt mvn -o package.zip
           fcli sc-sast scan start --publish-to=$SSC_APP_VERSION_ID --sensor-version=$SC_SAST_SENSOR_VERSION --package-file=package.zip --store=Id --log-file=scan.log
 
+          echo analisando scan Id
           fcli sc-sast scan wait-for ::Id:: --interval=30s
           fcli ssc issue count --appversion=$SSC_APP_VERSION_ID
 
