@@ -41,30 +41,15 @@ stages:
           FCLI_DEFAULT_SSC_URL: $(_FCLI_DEFAULT_SSC_URL)
           SSC_APP_VERSION_ID: $(_SSC_APP_VERSION_ID)
           SC_SAST_SENSOR_VERSION: $(_SC_SAST_SENSOR_VERSION)
+          branchName: $(Build.SourceBranchName)
       steps:
       - script: |
           echo Setting connection with Fortify Platform
+          echo "Branch Name: $(branchName)"
           #echo $FORTIFY_SSC_IP fortify.cyberxdemo.com >> /etc/hosts
           #Use --insecure switch if the SSL certificate is self generated.
           fcli ssc session login
           echo analisando login ssc
           fcli ssc session list
           
-          fcli sc-sast session login --ssc-ci-token=$FCLI_DEFAULT_SSC_CI_TOKEN --client-auth-token=$FCLI_DEFAULT_SC_SAST_CLIENT_AUTH_TOKEN  --ssc-url=$FCLI_DEFAULT_SSC_URL
-          echo analisando login sc-sast
-          fcli ssc session list
-          scancentral package -bt mvn -o package.zip
-          fcli sc-sast scan start --publish-to=$SSC_APP_VERSION_ID --sensor-version=$SC_SAST_SENSOR_VERSION --package-file=package.zip --store=Id --log-file=scan.log
-
-          echo analisando scan Id
-          fcli sc-sast scan wait-for ::Id:: --interval=30s
-          fcli ssc issue count --appversion=$SSC_APP_VERSION_ID
-
-          echo analisando log 
-          cat scan.log
-
-          echo Terminating connection with Fortify Platform
-          fcli sc-sast session logout
-          fcli ssc session logout  
-        displayName: Scan Central Scan
-        continueOnError: false
+          
