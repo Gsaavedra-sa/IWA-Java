@@ -51,6 +51,7 @@ stages:
             else
               SSC_APP="saitotest:3.0"
               echo "A variável 'VEC' está configurada como true.A herança sera feita semanticamente correta."
+              cat $SSC_APP
             fi
             echo Setting connection with Fortify Platform
             #echo "Branch Name: $branchName "
