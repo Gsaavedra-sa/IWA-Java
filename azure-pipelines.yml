@@ -49,7 +49,7 @@ stages:
               SSC_APP="Other-Version"
               echo "A variável 'VEC' está configurada como false. A herança sera feita com Other-Version no Fortify"
             else
-              SSC_APP="34"
+              SSC_APP="<saitotest>:<3.0>"
               echo "A variável 'VEC' está configurada como true.A herança sera feita semanticamente correta."
               cat $SSC_APP
             fi
